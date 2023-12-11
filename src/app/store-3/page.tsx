@@ -27,7 +27,7 @@ export default async function Store3() {
   return (
     <div className={styles.parent}>
       <div className={styles.header}>
-        <BannerImage banner_text="Store 3, left, main and right sections are editable via page builder" />
+        <BannerImage banner_text="Store 3, left, main and right sections are editable via page builder " />
       </div>
       <div className={styles.left_side}>
         <RenderBuilderContent content={contentLeft} model="store-3-left" />
