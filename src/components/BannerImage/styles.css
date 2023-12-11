@@ -1,0 +1,27 @@
+
+.banner_container{
+position: relative;
+}
+
+.banner_img{
+  height: 40vh;
+  width: 100vw;
+}
+
+.banner_content{
+  position: absolute;
+  bottom: 50%;
+  left: 10px
+}
+
+.banner_text{
+  font-size: 3rem;
+}
+
+.banner_btn{
+  padding: 1.5rem;
+  border: none;
+  border-radius: 1rem;
+  background: tomato;
+  font-size: 2rem;
+}
