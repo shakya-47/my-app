@@ -2,12 +2,13 @@ import BannerImage from "@/components/BannerImage/BannerImage";
 import styles from "./page.module.css";
 import InfoCard from "@/components/InfoCard/InfoCard";
 import { wrap } from "module";
+import data from "../data.json";
 
 function Store1() {
   return (
     <div className={styles.parent}>
       <div className={styles.header}>
-        <BannerImage banner_text="Store 1, Next.js page" />
+        <BannerImage banner_text={data.data[0].title} />
       </div>
       <div className={styles.left_side}>Left</div>
       <div className={styles.main}>

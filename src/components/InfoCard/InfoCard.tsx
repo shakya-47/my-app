@@ -1,5 +1,5 @@
 "use client";
-
+import { withChildren } from "@builder.io/react";
 import Image from "next/image";
 
 interface InfoCardProps {
@@ -36,4 +36,4 @@ function InfoCard({ title, description, img_url }: InfoCardProps) {
   );
 }
 
-export default InfoCard;
+export default withChildren(InfoCard);

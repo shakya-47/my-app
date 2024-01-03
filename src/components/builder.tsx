@@ -7,6 +7,8 @@ import "../builder-registry";
 interface BuilderPageProps {
   content?: BuilderContent;
   model?: string;
+  data?: any;
+  context?: any;
 }
 
 // Builder Public API Key set in .env file
@@ -15,6 +17,8 @@ builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
 export function RenderBuilderContent({
   content,
   model = "page",
+  data = {},
+  context = {},
 }: BuilderPageProps) {
   // Call the useIsPreviewing hook to determine if
   // the page is being previewed in Builder
@@ -25,7 +29,7 @@ export function RenderBuilderContent({
   //   return <BuilderComponent content={content} model={model} />;
   // }
   if (content || isPreviewing) {
-    return <BuilderComponent content={content} model={model} />;
+    return <BuilderComponent content={content} model={model} data={data} />;
   }
   // If the "content" is falsy and the page is
   // not being previewed in Builder, render the

@@ -4,9 +4,10 @@ import styles from "./page.module.css";
 import { builder } from "@builder.io/sdk";
 import { RenderBuilderContent } from "../components/builder";
 import data from "./data.json";
-import { useRouter } from "next/navigation";
 import BannerImage from "@/components/BannerImage/BannerImage";
-console.log("data", data.data);
+import { createContext, useEffect, useState } from "react";
+import MyContext from "./context";
+import Link from "next/link";
 
 builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
 
@@ -16,31 +17,36 @@ interface PageProps {
   };
 }
 
-export default async function Home() {
-  const router = useRouter();
-  // const content = await builder
-  //   .get("home-banner", {
-  //     prerender: false,
-  //   })
-  //   .toPromise();
+export default function Home() {
+  const [storeData, setStoreData] = useState<any>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetch("https://thenowmassage.com/?get_locations=1");
+      const jsonData = await data.json();
+      setStoreData(jsonData);
+      console.log(jsonData);
+    };
+    fetchData();
+  }, []);
 
   return (
-    <>
-      {/* <RenderBuilderContent content={content} model="home-banner" /> */}
-      <BannerImage />
-      <div className={styles.list_container}>
-        {data.data &&
-          data.data.map((store, index) => (
-            <a
-              key={store.id}
-              className={styles.list_item}
-              // onClick={() => router.push(store.url)}
-              href={store.url}
-            >
-              {store.title}
-            </a>
-          ))}
-      </div>
-    </>
+    <div>
+      <MyContext.Provider value={storeData}>
+        <BannerImage />
+        <div className={styles.list_container}>
+          {storeData &&
+            storeData.map((store: any, index: number) => (
+              <Link
+                key={store.id}
+                className={styles.list_item}
+                href={`/stores/${store.slug}`}
+              >
+                {store.title}
+              </Link>
+            ))}
+        </div>
+      </MyContext.Provider>
+    </div>
   );
 }

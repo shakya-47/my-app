@@ -2,6 +2,7 @@ import BannerImage from "@/components/BannerImage/BannerImage";
 import styles from "./page.module.css";
 import { builder } from "@builder.io/sdk";
 import { RenderBuilderContent } from "../../components/builder";
+import data from "../data.json";
 
 builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
 
@@ -27,7 +28,7 @@ export default async function Store3() {
   return (
     <div className={styles.parent}>
       <div className={styles.header}>
-        <BannerImage banner_text="Store 3, left, main and right sections are editable via page builder " />
+        <BannerImage banner_text={data.data[2].title} />
       </div>
       <div className={styles.left_side}>
         <RenderBuilderContent content={contentLeft} model="store-3-left" />

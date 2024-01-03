@@ -2,13 +2,13 @@
 import BannerImage from "@/components/BannerImage/BannerImage";
 import styles from "./page.module.css";
 import { builder } from "@builder.io/sdk";
-import { RenderBuilderContent } from "../../components/builder";
+import { RenderBuilderContent } from "../../../components/builder";
 import { useContext, useEffect, useState } from "react";
-import data from "../data.json";
+import data from "../../data.json";
 
 builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
 
-export default function Store2() {
+export default function StorePage({ params }) {
   const [content, setContent] = useState();
   const [storeData, setStoreData] = useState<any>({});
 
@@ -23,16 +23,22 @@ export default function Store2() {
     const fetchData = async () => {
       const data = await fetch("https://thenowmassage.com/?get_locations=1");
       const jsonData = await data.json();
-      setStoreData(jsonData);
+      setStoreData(
+        jsonData.filter((item: any) => item.slug === params.slug)[0]
+      );
       console.log(jsonData);
     };
     fetchData();
   }, []);
 
+  useEffect(() => {
+    console.log("storeData", storeData);
+  }, [storeData]);
+
   return (
     <div className={styles.parent}>
       <div className={styles.header}>
-        <BannerImage banner_text={data.data[1].title} />
+        <BannerImage banner_text={storeData.title} />
       </div>
       <div className={styles.left_side}>Left</div>
       <div className={styles.main}>Main section</div>
@@ -40,7 +46,7 @@ export default function Store2() {
         <RenderBuilderContent
           content={content}
           model="store-2-section"
-          data={{ store: storeData }}
+          data={{ storeData: storeData }}
         />
       </div>
       <div className={styles.footer}>Footer</div>

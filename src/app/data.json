@@ -2,22 +2,22 @@
 {"data":[
   {
     "id": 1,
-    "title": "Store 1",
+    "title": "Store 1, Next.js page",
     "url": "store-1"
   },
   {
     "id": 2,
-    "title": "Store 2",
+    "title": "Store 2, only right section is editable via page builder",
     "url": "store-2"
   },
   {
     "id": 3,
-    "title": "Store 3",
+    "title": "Store 3, left, main and right sections are editable via page builder",
     "url": "store-3"
   },
   {
     "id": 4,
-    "title": "Store 4",
+    "title": "Store 4, Full page builder",
     "url": "store-4"
   }]
 }
