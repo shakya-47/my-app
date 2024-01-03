@@ -8,7 +8,7 @@ import data from "../../data.json";
 
 builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
 
-export default function StorePage({ params }) {
+export default function StorePage({ params }: any) {
   const [content, setContent] = useState();
   const [storeData, setStoreData] = useState<any>({});
 
