@@ -20,6 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link
+          href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css"
+          rel="stylesheet"
+        />
+
         <script
           async
           src={`https://www.googletagmanager.com/ns.html?id=${process.env.GTM_ID}`}
