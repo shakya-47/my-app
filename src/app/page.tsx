@@ -25,7 +25,6 @@ export default function Home() {
       const data = await fetch("https://thenowmassage.com/?get_locations=1");
       const jsonData = await data.json();
       setStoreData(jsonData);
-      console.log(jsonData);
     };
     fetchData();
   }, []);

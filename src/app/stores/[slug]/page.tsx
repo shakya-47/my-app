@@ -38,13 +38,11 @@ export default function StorePage({ params }: any) {
       setStoreData(
         jsonData.filter((item: any) => item.slug === params.slug)[0]
       );
-      console.log(jsonData);
     };
     fetchData();
   }, []);
 
   useEffect(() => {
-    console.log("storeData", storeData);
     setLoc({
       ...loc,
       latitude: parseFloat(storeData.acf?.as_franchiseLatitude ?? "0"),
@@ -57,9 +55,7 @@ export default function StorePage({ params }: any) {
     });
   }, [storeData]);
 
-  useEffect(() => {
-    console.log("showPopup", showPopup);
-  }, [showPopup]);
+  useEffect(() => {}, [showPopup]);
 
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -83,8 +79,8 @@ export default function StorePage({ params }: any) {
             maxZoom={20}
             minZoom={3}
           >
-            <GeolocateControl position="top-left" />
-            <NavigationControl position="top-left" />
+            {/* <GeolocateControl position="top-left" />
+            <NavigationControl position="top-left" /> */}
             <Marker
               {...marker}
               // onClick={() => setShowPopup(!showPopup)}
