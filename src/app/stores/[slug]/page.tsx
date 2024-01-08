@@ -13,7 +13,6 @@ import Map, {
 } from "react-map-gl";
 import Link from "next/link";
 import "mapbox-gl/dist/mapbox-gl.css";
-
 import airports from "./airport.json";
 
 builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
@@ -21,6 +20,9 @@ builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
 export default function StorePage({ params }: any) {
   const [content, setContent] = useState();
   const [storeData, setStoreData] = useState<any>({});
+  const [loc, setLoc] = useState({ latitude: 0, longitude: 0, zoom: 10 });
+  const [marker, setMarker] = useState({ latitude: 0, longitude: 0 });
+  const [showPopup, setShowPopup] = useState(true);
 
   useEffect(() => {
     builder
@@ -43,7 +45,21 @@ export default function StorePage({ params }: any) {
 
   useEffect(() => {
     console.log("storeData", storeData);
+    setLoc({
+      ...loc,
+      latitude: parseFloat(storeData.acf?.as_franchiseLatitude ?? "0"),
+      longitude: parseFloat(storeData.acf?.as_franchiseLongitude ?? "0"),
+    });
+    setMarker({
+      ...marker,
+      latitude: parseFloat(storeData.acf?.as_franchiseLatitude ?? "0"),
+      longitude: parseFloat(storeData.acf?.as_franchiseLongitude ?? "0"),
+    });
   }, [storeData]);
+
+  useEffect(() => {
+    console.log("showPopup", showPopup);
+  }, [showPopup]);
 
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -59,19 +75,42 @@ export default function StorePage({ params }: any) {
         <div className={styles.mainStyle}>
           <Map
             ref={mapRef}
+            {...loc}
+            onMove={(event) => setLoc(event.viewState)}
             mapboxAccessToken={mapboxToken}
             mapStyle="mapbox://styles/mapbox/streets-v12"
             style={{ width: "50%", height: "50%" }}
-            initialViewState={{
-              latitude: 35.668641,
-              longitude: 139.750567,
-              zoom: 10,
-            }}
             maxZoom={20}
             minZoom={3}
           >
             <GeolocateControl position="top-left" />
             <NavigationControl position="top-left" />
+            <Marker
+              {...marker}
+              // onClick={() => setShowPopup(!showPopup)}
+            ></Marker>
+            {showPopup && (
+              <Popup
+                offset={25}
+                latitude={marker.latitude}
+                longitude={marker.longitude}
+                onClose={() => {
+                  setShowPopup(true);
+                }}
+                closeButton={false}
+              >
+                <h3 className={styles.popupTitle}>{storeData.title}</h3>
+                <div className={styles.popupInfo}>
+                  <Link
+                    href={storeData?.link === "" ? "#" : storeData.link}
+                    // target={storeData.link === "" ? null : "_blank"}
+                    className={styles.popupWebUrl}
+                  >
+                    Website
+                  </Link>
+                </div>
+              </Popup>
+            )}
           </Map>
         </div>
       </div>

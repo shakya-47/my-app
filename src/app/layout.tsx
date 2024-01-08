@@ -4,6 +4,7 @@ import "./globals.css";
 import { Suspense } from "react";
 import Analytics from "@/lib/Analytics";
 import Script from "next/script";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
